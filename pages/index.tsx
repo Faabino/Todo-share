@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 import { Todo } from "../data/todo/todo.interface";
 import { findTodo } from "../data/todo/todo.service";
 import React from "react";
+import { Card, Container, Col } from "react-bootstrap";
 
 type Props = {
   todos: Todo[];
@@ -20,7 +21,25 @@ export default function Home({ todos }: Props) {
 
       <main className={styles.main}>
         <h1>Hello xd</h1>
-        {todos.map(({ name }) => name).join(", ")}
+        <Container className="listCards">
+          {todos.map((todo, index) => {
+            return (
+              <React.Fragment key={index}>
+                <Col xs={4}>
+                  <Card style={{ width: "250px" }}>
+                    <Card.Body>
+                      <Card.Title>{todo.name}</Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        List shared with : ?
+                      </Card.Subtitle>
+                      <Card.Text>{todo.list} : aperçu listes</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </React.Fragment>
+            );
+          })}
+        </Container>
 
         <button onClick={() => setShowForm(!showForm)}>Add</button>
 
@@ -29,8 +48,8 @@ export default function Home({ todos }: Props) {
             <label htmlFor="name">Name:</label>
             <input type="text" name="name" />
 
-            <label htmlFor="test">Test:</label>
-            <input type="text" name="test" />
+            <label htmlFor="list">List</label>
+            <input type="text" name="list" />
             <button type="submit">Add</button>
           </form>
         ) : null}
